@@ -1,0 +1,53 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 100
+}
+.sidebar{
+    position: absolute;
+    height: 657px;
+    width: 250px;
+    display: inline-block;
+    background-color: rgb(68, 71, 68);
+}
+.login{
+    position: relative;
+    top: 420px;
+    left: 50px;
+    padding: 10px;
+    font-weight: 700
+}
+.logout{
+    position: relative;
+    top: 420px;
+    left: 50px;
+    padding: 10px;
+    font-weight: 700
+}
+.sign{
+    position: relative;
+    top: 420px;
+    left: 60px;
+    padding: 10px;
+    font-weight: 700
+}
+h1{
+    color: white;
+    position: relative;
+    top: 30px;
+    left: 30px;
+}
+h2{
+    color: white;
+    position: relative;
+    left: 40px;
+}
+.navhover{
+    padding: 10px;
+    position: relative;
+    top: 50px;
+}
+.navhover:hover{
+    background-color: rgb(122, 243, 122);
+}

@@ -1,0 +1,28 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.filedetails{
+    position: relative;
+    height: 503px;
+    /*border: 2px solid rgb(68, 71, 68);*/
+}
+.filename{
+    position: relative;
+    display: inline-block;
+    top: 5px;
+    left: 35px;
+    color: rgb(68, 71, 68);
+}
+.filesize{
+    position: relative;
+    display: inline-block;
+    top: 5px;
+    left: 210px;
+    color: rgb(68, 71, 68);
+}
+.download{
+    position: relative;
+    left: 280px;
+    padding: 10px;
+}

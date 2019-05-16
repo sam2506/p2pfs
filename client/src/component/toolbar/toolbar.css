@@ -1,0 +1,51 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.toolbar{
+    position: relative;
+    height: 150px;
+    width: 1080px;
+}
+.head{
+    position: relative;
+    color:  rgb(68, 71, 68);
+}
+.search{
+    position: relative;
+    top: 60px;
+    left: 30px;
+    height: 20px;
+    width: 200px;
+    border: 1px solid  rgb(68, 71, 68);
+}
+.searchbut{
+    position: relative;
+    top: 60px;
+    left: 30px;
+    background-color:  rgb(68, 71, 68);
+    color: white;
+    font-size: 13px;
+    padding: 3px;
+    border: none;
+}
+.upload{
+    position: relative;
+    left: 520px;
+    background-color:  rgb(68, 71, 68);
+    color: white;
+    font-size: 13px;
+    padding: 10px;
+    border: none;
+    top: -6px;
+}
+.upload1{
+    position: relative;
+    left: 525px;
+    background-color:  rgb(68, 71, 68);
+    color: white;
+    font-size: 13px;
+    padding: 12.5px;
+    border: none;
+    top: -6.5px;
+}

@@ -6,9 +6,10 @@ const logger = require("morgan");
 const socketIO = require("socket.io");
 const http = require("http");
 const fs=require('fs');
+const path=require('path');
 var session = require('express-session');
 
-const API_PORT = 3001;
+const API_PORT = process.env.PORT || 3001;
 const app = express();
 app.use(cors());
 //app.use(cors({origin:"http://localhost:3000",credentials:true}));
@@ -22,16 +23,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(session({secret: 'ssshhhhh'}));
 app.use(logger("dev"));
-app.use("/api", router);
+app.use("/", router);
 
 var {fileModel}=require('./model/model');
 mongoose.Promise=global.Promise;
-mongoose.connect("mongodb://localhost:27017/filemodel");
+mongoose.connect('mongodb+srv://sam2506:sam@1pra2suj@cluster0-blbpi.mongodb.net/test?retryWrites=true',{
+    useNewUrlParser: true,
+    ssl: true,
+    retryWrites: true,
+})
+//mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/filemodel");
 
 //var server=http.createServer(httpsOptions,app);
 var server=http.createServer(app);
 var io=socketIO(server);
-server.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
 
 var sess,no;
 
@@ -153,5 +158,14 @@ io.on("connection",function(socket){
         io.emit('left',{});
     })
 })
+
+if(process.env.NODE_ENV==='production'){
+    app.use(express.static('../client'));
+    app.get('*',(req,res)=>{
+        res.sendFile(path.join(__dirname,'..','client','build','index.html'));
+    })
+}
+
+server.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
 
 

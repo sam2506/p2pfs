@@ -37,7 +37,7 @@ mongoose.connect('mongodb+srv://sam2506:sam@1pra2suj@cluster0-blbpi.mongodb.net/
 //var server=http.createServer(httpsOptions,app);
 var server=http.createServer(app);
 var io=socketIO(server);
-
+io.set('origins', '*:*');
 var sess,no;
 
 fileModel.watch().on('change',(data)=>{
@@ -168,6 +168,7 @@ io.on("connection",function(socket){
     // socket.on("filesend",function(file){
     //     io.emit("fileret",file);
     // })
+    console.log(process.env.NODE_ENV);
     socket.on('joinRoom',function(file){
         var roomName=file.fileName;
         socket.join(''+roomName);
@@ -203,6 +204,6 @@ if(process.env.NODE_ENV==='production'){
     })
 }
 
-server.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
+server.listen(API_PORT,() => console.log(`LISTENING ON PORT ${API_PORT}`));
 
 

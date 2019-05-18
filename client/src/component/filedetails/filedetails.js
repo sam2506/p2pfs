@@ -3,7 +3,9 @@ import './filedetails.css';
 import socketIOClient from "socket.io-client";
 import Axios from 'axios';
 
-const endpoint='http://localhost:3001/';
+//const endpoint='https://p2pfs.herokuapp.com/';
+//const endpoint='http://localhost:3001';
+const endpoint="*:*";
 const socket=socketIOClient(endpoint);
 var incomingData=[],totSize=0;
 class filedetails extends Component{
@@ -54,6 +56,7 @@ class filedetails extends Component{
         })
     }
     render(){
+        //console.log(process.env.NODE_ENV);
         socket.removeAllListeners();
         var updatedFiles=this.state.Files;
         var list=updatedFiles.map((file,index)=>{

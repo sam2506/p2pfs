@@ -57,6 +57,7 @@ class filedetails extends Component{
     }
     render(){
         //console.log(process.env.NODE_ENV);
+        console.log(window.location.hostname);
         socket.removeAllListeners();
         var updatedFiles=this.state.Files;
         var list=updatedFiles.map((file,index)=>{

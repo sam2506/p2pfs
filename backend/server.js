@@ -40,6 +40,41 @@ var io=socketIO(server);
 
 var sess,no;
 
+fileModel.watch().on('change',(data)=>{
+    var id=data.documentKey._id;
+    fileModel.findById(id,function(err,result){
+        if(err){
+            console.log(err);
+        }
+        else{
+            if(result.files.length>0){
+                var length=result.files.length;
+                io.emit('newFile',{updatedFile:result.files[length-1]})
+            }
+        }
+    })
+});
+
+app.get('/',function(req,res){
+    console.log("new user connected");
+    fileModel.find({online: true},function(err,result){
+        if(err){
+            console.log(err);
+        }
+        else{
+            if(result){
+                var allUploadedFiles=[];
+                result.forEach(function(user){
+                    for(var iter=0;iter<user.files.length;iter++){
+                        allUploadedFiles.push(user.files[iter]);
+                    }
+                })
+                res.send({uploadedFiles: allUploadedFiles});
+            }
+        }
+    })
+})
+
 app.post('/signup',function(req,res){
     var file=new fileModel({
         files: [],
@@ -90,6 +125,7 @@ app.post('/logout',function(req,res){
             }
             else
             console.log("patanhi");
+            io.emit('logout',{email: req.body.email});
             res.end();
         }
     })
@@ -100,7 +136,7 @@ app.post('/upload',function(req,res){
     console.log(req.body.fileName);
     console.log(req.body.fileSize);
     console.log(sess.email);
-    fileModel.findOneAndUpdate({email: req.body.email},{$push:{files: {name: req.body.fileName,size: req.body.fileSize}}},function(err,result){
+    fileModel.findOneAndUpdate({email: req.body.email},{$addToSet:{files: {Email: req.body.email,name: req.body.fileName,size: req.body.fileSize}}},function(err,result){
         if(result)
             console.log("done");  
         res.end();
@@ -129,9 +165,9 @@ sendSignal=(roomName,size)=>{
 }
 
 io.on("connection",function(socket){
-    socket.on("filesend",function(file){
-        io.emit("fileret",file);
-    })
+    // socket.on("filesend",function(file){
+    //     io.emit("fileret",file);
+    // })
     socket.on('joinRoom',function(file){
         var roomName=file.fileName;
         socket.join(''+roomName);

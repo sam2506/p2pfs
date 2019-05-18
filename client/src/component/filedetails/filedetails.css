@@ -26,3 +26,35 @@
     left: 280px;
     padding: 10px;
 }
+.list{
+    position: relative;
+    top: 20px;
+    height: 40px;
+}
+.filename1{
+    position: absolute;
+    display: inline-block;
+    left: 40px;
+    top: 5px;
+}
+.filesize1{
+    display: inline-block;
+    position: absolute;
+    left: 290px;
+    top: 5px;
+}
+.download1{
+    background-color:  rgb(68, 71, 68);
+    color: white;
+    display: inline-block;
+    position: absolute;
+    left: 455px;
+    padding: 4px;
+    top: -0.5px;
+}
+hr{
+    position: relative;
+    top: 35px;
+    width: 550px;
+    left: 15px;
+}

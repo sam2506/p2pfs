@@ -1,6 +1,5 @@
 import React from 'react';
 import './sidebar.css';
-import Axios from 'axios';
 import {withRouter} from 'react-router-dom';
 
 var buttons;

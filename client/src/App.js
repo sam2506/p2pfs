@@ -1,6 +1,5 @@
 // /client/App.js
 import React, { Component } from "react";
-import axios from "axios";
 import Fileshare from './container/fileshare/fileshare';
 
 class App extends Component {

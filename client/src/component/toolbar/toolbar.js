@@ -1,9 +1,7 @@
 import React,{Component} from 'react';
 import './toolbar.css';
 import axios from 'axios';
-import socketIOClient from "socket.io-client";
-
-var incomingData=[];
+//import socketIOClient from "socket.io-client";
 
 class toolbar extends Component{
     state={
@@ -12,8 +10,8 @@ class toolbar extends Component{
     }
     
     loadFile=(event)=>{
-        const {endpoint} = this.state;
-        const socket = socketIOClient(endpoint);
+        //const {endpoint} = this.state;
+        //const socket = socketIOClient(endpoint);
         var File=event.target.files[0];
         this.setState({file: File});
         /*socket.emit("filesend",File);

@@ -17,9 +17,14 @@ class fileshare extends Component{
         if(online===true)
         {
             Axios.post('http://localhost:3001/logout',{email: Email})
-            .then=(err,res)=>{}
+            .then((res)=>{})
         }
         this.setState({online: !online,email: email});
+    }
+    componentDidMount(){
+        window.onbeforeunload=()=>{
+            this.negateOnline();
+        }
     }
     render(){
         return(

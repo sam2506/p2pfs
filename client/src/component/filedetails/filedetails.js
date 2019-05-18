@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import './filedetails.css';
-import Axios from 'axios';
 import socketIOClient from "socket.io-client";
+import Axios from 'axios';
 
 const endpoint='http://localhost:3001/';
 const socket=socketIOClient(endpoint);
@@ -10,12 +10,11 @@ class filedetails extends Component{
     state={
         Files:[],
     }
-    //file details has to be fetched from the database
-    //download button will be attached to each file detail
-    downloadFile=()=>{
-        var fileName='a.mp4';
-        var fileSize='3605857';
-        //console.log(this.props.email);
+    downloadFile=(event)=>{
+        var fileSizeElement=event.target.previousSibling;
+        var fileNameElement=fileSizeElement.previousSibling;
+        var fileName=fileNameElement.innerHTML;
+        var fileSize=fileSizeElement.innerHTML;
         socket.emit('joinRoom',{fileName: fileName,fileSize: fileSize});
     }
     readFileChunk=(File,number)=>{
@@ -33,7 +32,7 @@ class filedetails extends Component{
         reader.readAsArrayBuffer(File.slice(startByte,endByte));
     }
 
-    downloadComplete=()=>{
+    downloadComplete=(nameOfFile)=>{
         console.log("abhi");
         var blob=new Blob(incomingData);
         var a = document.createElement("a");
@@ -41,19 +40,30 @@ class filedetails extends Component{
         a.style = "display: none";
         var url = window.URL.createObjectURL(blob);
         a.href = url;
-        a.download ="hello.mp4";
+        a.download =""+nameOfFile;
         a.click();
         window.URL.revokeObjectURL(url);
         totSize=0;
     }
-   
+    componentDidMount(){
+        Axios.get('http://localhost:3001/')
+        .then((res)=>{
+            //console.log("aato");
+            //console.log(res);
+            this.setState({Files: res.data.uploadedFiles});
+        })
+    }
     render(){
-        // Axios.get('http://localhost:27017/fileModel')
-        //     .then((res,err)=>{
-        //         console.log(res);
-        //     })
         socket.removeAllListeners();
-        //console.log(this.props.filesData);
+        var updatedFiles=this.state.Files;
+        var list=updatedFiles.map((file,index)=>{
+            return <div key={index} className="list">
+                    <h4 className="filename1">{file.name}</h4>
+                    <h4 className="filesize1">{file.size}</h4>
+                    <button onClick={this.downloadFile} className="download1">Download</button>
+                    <hr/>
+                </div>
+        })
         var filesData=this.props.filesData;
         var that=this;
         socket.on(''+this.props.email,function(file){
@@ -77,15 +87,44 @@ class filedetails extends Component{
             if(totSize>=chunk.size){
                 socket.emit('leaveRoom',{room: chunk.room});
                 socket.on('left',function(data){
-                    that.downloadComplete();
+                    that.downloadComplete(chunk.room);
                 })
             }
         });
+        socket.on('newFile',function(data){
+            console.log(data.updatedFile);
+            var files=that.state.Files;
+            var flag=0;
+            for(var iter=0;iter<files.length;iter++){
+                if(files[iter].Email===data.updatedFile.Email){
+                    if(files[iter].name===data.updatedFile.name){
+                        if(files[iter].size===data.updatedFile.size){
+                            flag=1;
+                            break;
+                        }
+                    }
+                }
+            }
+            if(flag===0){
+                files.push(data.updatedFile);
+                that.setState({Files: files});
+            }
+        })
+        socket.on('logout',function(data){
+            var files=that.state.Files;
+            for(var iter=0;iter<files.length;iter++){
+                if(files[iter].Email===data.email){
+                    files.splice(iter,1);
+                    iter=iter-1;
+                }
+            }
+            that.setState({Files: files});
+        })
         return(
             <div className="filedetails">
                 <h3 className="filename">File Name</h3>
                 <h3 className="filesize">File Size</h3>
-                <button onClick={this.downloadFile} className="download">Download</button>
+                {list}
             </div>
         )
     }

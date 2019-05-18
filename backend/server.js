@@ -38,6 +38,10 @@ mongoose.connect('mongodb+srv://sam2506:sam@1pra2suj@cluster0-blbpi.mongodb.net/
 var server=http.createServer(app);
 var io=socketIO(server);
 io.set('origins', '*:*');
+//io.configure () ->
+  io.set("transports", ["xhr-polling"])
+  io.set("polling duration", 10)
+
 var sess,no;
 
 fileModel.watch().on('change',(data)=>{

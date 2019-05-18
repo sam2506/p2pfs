@@ -3,9 +3,10 @@ import './filedetails.css';
 import socketIOClient from "socket.io-client";
 import Axios from 'axios';
 
-const endpoint='https://p2pfs.herokuapp.com/socket.io/socket.io.js';
+//const endpoint='https://p2pfs.herokuapp.com/socket.io/socket.io.js';
 //const endpoint='http://localhost:3001';
 //const endpoint="*:*";
+const endpoint=window.location.hostname;
 const socket=socketIOClient(endpoint);
 var incomingData=[],totSize=0;
 class filedetails extends Component{

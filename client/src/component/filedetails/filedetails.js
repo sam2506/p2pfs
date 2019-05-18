@@ -3,7 +3,7 @@ import './filedetails.css';
 import socketIOClient from "socket.io-client";
 import Axios from 'axios';
 
-const endpoint='https://p2pfs.herokuapp.com/';
+const endpoint='https://p2pfs.herokuapp.com/socket.io/socket.io.js';
 //const endpoint='http://localhost:3001';
 //const endpoint="*:*";
 const socket=socketIOClient(endpoint);

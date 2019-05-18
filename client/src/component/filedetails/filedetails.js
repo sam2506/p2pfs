@@ -87,6 +87,7 @@ class filedetails extends Component{
             if(totSize>=chunk.size){
                 socket.emit('leaveRoom',{room: chunk.room});
                 socket.on('left',function(data){
+                    socket.removeListener('left');
                     that.downloadComplete(chunk.room);
                 })
             }

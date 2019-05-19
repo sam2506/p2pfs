@@ -36,7 +36,18 @@ mongoose.connect('mongodb+srv://sam2506:sam@1pra2suj@cluster0-blbpi.mongodb.net/
 
 //var server=http.createServer(httpsOptions,app);
 var server=http.createServer(app);
-var io=socketIO(server);
+var io=socketIO(server,{
+    handlePreflightRequest: (req, res) => {
+        console.log(req.headers.origin);
+        const headers = {
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
+            "Access-Control-Allow-Credentials": true
+        };
+        res.writeHead(200, headers);
+        res.end();
+    }
+});
 io.set('origins', '*:*');
 // io.configure(function(){ 
 //io.set("transports", ["xhr-polling"]); 

@@ -49,7 +49,7 @@ class filedetails extends Component{
         totSize=0;
     }
     componentDidMount(){
-        Axios.get('http://p2pfs.herokuapp.com/')
+        Axios.get('https://p2pfs.herokuapp.com/')
         .then((res)=>{
             //console.log("aato");
             //console.log(res);

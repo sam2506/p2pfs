@@ -38,10 +38,10 @@ mongoose.connect('mongodb+srv://sam2506:sam@1pra2suj@cluster0-blbpi.mongodb.net/
 var server=http.createServer(app);
 var io=socketIO(server);
 io.set('origins', '*:*');
-//io.configure () ->
-  io.set("transports", ["xhr-polling"])
-  io.set("polling duration", 10)
-
+// io.configure(function(){ 
+//io.set("transports", ["xhr-polling"]); 
+// io.set("polling duration", 10); 
+// }); 
 var sess,no;
 
 fileModel.watch().on('change',(data)=>{
@@ -208,6 +208,6 @@ if(process.env.NODE_ENV==='production'){
     })
 }
 
-server.listen(API_PORT,() => console.log(`LISTENING ON PORT ${API_PORT}`));
+server.listen(API_PORT,'0.0.0.0',() => console.log(`LISTENING ON PORT ${API_PORT}`));
 
 

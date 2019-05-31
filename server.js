@@ -84,7 +84,7 @@ fileModel.watch().on('change',(data)=>{
     })
 });
 
-app.get('/api/',function(req,res){
+app.get('/api',function(req,res){
     console.log("new user connected");
     fileModel.find({online: true},function(err,result){
         if(err){

@@ -84,7 +84,7 @@ fileModel.watch().on('change',(data)=>{
     })
 });
 
-app.get('/',function(req,res){
+app.get('/api',function(req,res){
     console.log("new user connected");
     fileModel.find({online: true},function(err,result){
         if(err){
@@ -228,7 +228,7 @@ io.on("connection",function(socket){
 if(process.env.NODE_ENV==='production'){
     console.log('env');
     app.use(express.static('/client'));
-    app.get('*',(req,res)=>{
+    app.get('/',(req,res)=>{
         res.sendFile(path.join(__dirname,'client','build','index.html'));
     })
 }

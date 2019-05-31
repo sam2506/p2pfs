@@ -38,7 +38,7 @@ mongoose.connect('mongodb+srv://sam2506:sam@1pra2suj@cluster0-blbpi.mongodb.net/
 var server=http.createServer(app);
 var io=socketIO(server,{
     handlePreflightRequest: (req, res) => {
-        console.log(req.headers.origin);
+        //console.log(req.headers.origin);
         const headers = {
             "Access-Control-Allow-Headers": "Content-Type, Authorization",
             "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
@@ -54,6 +54,19 @@ io.set('origins', '*:*');
 // io.set("polling duration", 10); 
 // }); 
 var sess,no;
+
+app.use(function(req, res, next) {
+    var allowedOrigins = ['http://127.0.0.1:8020', 'http://localhost:8020', 'http://127.0.0.1:9000', 'https://p2pfs.herokuapp.com'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+         res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
+    return next();
+});
 
 fileModel.watch().on('change',(data)=>{
     var id=data.documentKey._id;
@@ -183,7 +196,7 @@ io.on("connection",function(socket){
     // socket.on("filesend",function(file){
     //     io.emit("fileret",file);
     // })
-    console.log(process.env.NODE_ENV);
+    //console.log(process.env.NODE_ENV);
     socket.on('joinRoom',function(file){
         var roomName=file.fileName;
         socket.join(''+roomName);

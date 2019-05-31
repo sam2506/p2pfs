@@ -51,8 +51,9 @@ class filedetails extends Component{
     componentDidMount(){
         //Axios.get('http://0.0.0.0:3001/')
         //Axios.get('http://localhost:3001/')
-        //Axios.get('https://p2pfs.herokuapp.com/')
-        Axios.get(window.location.origin+'/')
+        Axios.get('https://p2pfs.herokuapp.com/')
+        //Axios.get(window.location.origin+':3001/')
+        //Axios.get('/')
         .then((res)=>{
             //console.log("aato");
             console.log(res);

@@ -56,7 +56,7 @@ io.set('origins', '*:*');
 var sess,no;
 
 app.use(function(req, res, next) {
-    var allowedOrigins = ['http://127.0.0.1:8020', 'http://localhost:8020', 'http://127.0.0.1:9000', 'https://p2pfs.herokuapp.com'];
+    var allowedOrigins = ['http://0.0.0.0:3001','http://127.0.0.1:8020', 'http://localhost:8020', 'http://127.0.0.1:9000', 'https://p2pfs.herokuapp.com'];
     var origin = req.headers.origin;
     if(allowedOrigins.indexOf(origin) > -1){
         console.log(origin);

@@ -84,25 +84,25 @@ fileModel.watch().on('change',(data)=>{
     })
 });
 
-/*app.get('/api',function(req,res){
-    console.log("new user connected");
-    fileModel.find({online: true},function(err,result){
-        if(err){
-            console.log(err);
-        }
-        else{
-            if(result){
-                var allUploadedFiles=[];
-                result.forEach(function(user){
-                    for(var iter=0;iter<user.files.length;iter++){
-                        allUploadedFiles.push(user.files[iter]);
-                    }
-                })
-                res.send({uploadedFiles: allUploadedFiles});
-            }
-        }
-    })
-})*/
+// app.get('/',function(req,res){
+//     console.log("new user connected");
+//     fileModel.find({online: true},function(err,result){
+//         if(err){
+//             console.log(err);
+//         }
+//         else{
+//             if(result){
+//                 var allUploadedFiles=[];
+//                 result.forEach(function(user){
+//                     for(var iter=0;iter<user.files.length;iter++){
+//                         allUploadedFiles.push(user.files[iter]);
+//                     }
+//                 })
+//                 res.send({uploadedFiles: allUploadedFiles});
+//             }
+//         }
+//     })
+// })
 
 app.post('/signup',function(req,res){
     var file=new fileModel({
@@ -228,7 +228,7 @@ io.on("connection",function(socket){
 if(process.env.NODE_ENV==='production'){
     console.log('env');
     app.use(express.static('/client'));
-    app.get('/',(req,res)=>{
+    app.get('*',(req,res)=>{
         res.sendFile(path.join(__dirname,'client','build','index.html'));
     })
 }

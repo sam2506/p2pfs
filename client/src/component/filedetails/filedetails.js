@@ -51,10 +51,11 @@ class filedetails extends Component{
     componentDidMount(){
         //Axios.get('http://0.0.0.0:3001/')
         //Axios.get('http://localhost:3001/')
-        Axios.get('https://p2pfs.herokuapp.com/')
+        //Axios.get('https://p2pfs.herokuapp.com/')
+        Axios.get(window.location.origin+'/')
         .then((res)=>{
             //console.log("aato");
-            //console.log(res);
+            console.log(res);
             this.setState({Files: res.data.uploadedFiles});
         })
         .catch((err)=>{
@@ -63,7 +64,7 @@ class filedetails extends Component{
     }
     render(){
         //console.log(process.env.NODE_ENV);
-        //console.log(window.location.hostname);
+        console.log(window.location.origin);
         socket.removeAllListeners();
         var updatedFiles=this.state.Files;
         var that=this;

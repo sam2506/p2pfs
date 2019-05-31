@@ -84,7 +84,7 @@ fileModel.watch().on('change',(data)=>{
     })
 });
 
-app.get('/api',function(req,res){
+app.get('/api/hello',function(req,res){
     console.log("new user connected");
     fileModel.find({online: true},function(err,result){
         if(err){
@@ -226,11 +226,11 @@ io.on("connection",function(socket){
 })
 
 if(process.env.NODE_ENV==='production'){
-    //console.log('env');
-    /*app.use(express.static('/client'));
+    console.log('env');
+    app.use(express.static('/client'));
     app.get('*',(req,res)=>{
         res.sendFile(path.join(__dirname,'client','build','index.html'));
-    })*/
+    })
 }
 
 server.listen(API_PORT,'0.0.0.0',() => console.log(`LISTENING ON PORT ${API_PORT}`));

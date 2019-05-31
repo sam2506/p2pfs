@@ -226,11 +226,11 @@ io.on("connection",function(socket){
 })
 
 if(process.env.NODE_ENV==='production'){
-    console.log('env');
-    app.use(express.static('/client'));
+    //console.log('env');
+    /*app.use(express.static('/client'));
     app.get('*',(req,res)=>{
         res.sendFile(path.join(__dirname,'client','build','index.html'));
-    })
+    })*/
 }
 
 server.listen(API_PORT,'0.0.0.0',() => console.log(`LISTENING ON PORT ${API_PORT}`));

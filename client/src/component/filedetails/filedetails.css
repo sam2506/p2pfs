@@ -50,7 +50,8 @@
     position: absolute;
     left: 455px;
     padding: 4px;
-    top: -0.5px;
+    top: 1.5px;
+    border: none
 }
 hr{
     position: relative;

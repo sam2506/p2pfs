@@ -44,12 +44,16 @@ class toolbar extends Component{
         else
         console.log("please select a file");
     }
+    search=(event)=>{
+        var text=event.target.value;
+        this.props.changeSearch(text);
+    }
     render(){
         
         return(
             <div className="toolbar">
                 <h1 className="head">Files Shared</h1>
-                <input className="search" type="text" placeholder="Search"/>
+                <input onChange={this.search} className="search" type="text" placeholder="Search"/>
                 <button className="searchbut">Search</button>
                 <input onChange={this.loadFile} type="file" className="upload"/>
                 <button onClick={this.upload} className="upload1">Upload</button>

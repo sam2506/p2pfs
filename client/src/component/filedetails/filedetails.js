@@ -3,10 +3,10 @@ import './filedetails.css';
 import socketIOClient from "socket.io-client";
 import Axios from 'axios';
 
-const endpoint='https://p2pfs.herokuapp.com/';
-//const endpoint='http://localhost:3001';
+//const endpoint='https://p2pfs.herokuapp.com/';
+const endpoint='http://localhost:3001';
 //const endpoint="*:*";
-//const endpoint=window.location.hostname;
+//const endpoint=window.location.hostname+":3001";
 const socket=socketIOClient(endpoint);
 var incomingData=[],totSize=0;
 class filedetails extends Component{
@@ -49,7 +49,8 @@ class filedetails extends Component{
         totSize=0;
     }
     componentDidMount(){
-        Axios.get('https://p2pfs.herokuapp.com/')
+        //Axios.get('http://localhost:3001/')
+        Axios.get('http://p2pfs.herokuapp.com/')
         .then((res)=>{
             //console.log("aato");
             //console.log(res);
@@ -58,19 +59,20 @@ class filedetails extends Component{
     }
     render(){
         //console.log(process.env.NODE_ENV);
-        console.log(window.location.hostname);
+        //console.log(window.location.hostname);
         socket.removeAllListeners();
         var updatedFiles=this.state.Files;
-        var list=updatedFiles.map((file,index)=>{
-            return <div key={index} className="list">
-                    <h4 className="filename1">{file.name}</h4>
-                    <h4 className="filesize1">{file.size}</h4>
-                    <button onClick={this.downloadFile} className="download1">Download</button>
-                    <hr/>
-                </div>
-        })
-        var filesData=this.props.filesData;
         var that=this;
+        var list=updatedFiles.map((file,index)=>{
+            if(file.name.search(that.props.searchText)!==-1)
+                return <div key={index} className="list">
+                        <h4 className="filename1">{file.name}</h4>
+                        <h4 className="filesize1">{file.size}</h4>
+                        <button onClick={this.downloadFile} className="download1">Download</button>
+                        <hr/>
+                    </div>
+        });
+        var filesData=this.props.filesData;
         socket.on(''+this.props.email,function(file){
             console.log("happy");
             for(var itr=0;itr<filesData.length;itr++)

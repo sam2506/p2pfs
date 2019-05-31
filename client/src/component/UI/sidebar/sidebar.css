@@ -16,21 +16,29 @@
     top: 420px;
     left: 50px;
     padding: 10px;
-    font-weight: 700
+    font-weight: 700;
+    color: rgb(44, 46, 44);
+    width: 60px;
+    border: none
 }
 .logout{
     position: relative;
     top: 420px;
-    left: 50px;
+    left: 80px;
     padding: 10px;
-    font-weight: 700
+    font-weight: 700;
+    width:60px;
+    color: rgb(44, 46, 44);
+    border: none
 }
 .sign{
     position: relative;
     top: 420px;
     left: 60px;
     padding: 10px;
-    font-weight: 700
+    font-weight: 700;
+    color: rgb(44, 46, 44);
+    border: none
 }
 h1{
     color: white;
@@ -49,5 +57,11 @@ h2{
     top: 50px;
 }
 .navhover:hover{
-    background-color: rgb(122, 243, 122);
+    background-color: rgb(42, 43, 42);
+}
+.actv{
+    padding: 10px;
+    position: relative;
+    top: 50px;
+    background-color: rgb(166, 177, 166);
 }

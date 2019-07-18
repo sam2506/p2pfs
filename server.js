@@ -2,12 +2,10 @@ const mongoose = require("mongoose");
 const express = require("express");
 var cors = require("cors");
 const bodyParser = require("body-parser");
-const logger = require("morgan");
 const socketIO = require("socket.io");
 const http = require("http");
 const fs=require('fs');
 const path=require('path');
-var session = require('express-session');
 
 const API_PORT = process.env.PORT || 3001;
 const app = express();
@@ -21,9 +19,6 @@ const router = express.Router();
   }*/
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(session({secret: 'ssshhhhh'}));
-app.use(logger("dev"));
-app.use("/", router);
 
 var {fileModel}=require('./model/model');
 mongoose.Promise=global.Promise;
@@ -53,11 +48,12 @@ io.set('origins', '*:*');
 //io.set("transports", ["xhr-polling"]); 
 // io.set("polling duration", 10); 
 // }); 
-var sess,no;
+var no;
 
 app.use(function(req, res, next) {
-    var allowedOrigins = ['http://0.0.0.0:3001','http://127.0.0.1:8020', 'http://localhost:8020', 'http://127.0.0.1:9000', 'https://p2pfs.herokuapp.com'];
+    var allowedOrigins = ['http://localhost:3000','http://0.0.0.0:3001','http://127.0.0.1:8020', 'http://localhost:8020', 'http://127.0.0.1:9000', 'https://p2pfs.herokuapp.com'];
     var origin = req.headers.origin;
+    console.log(allowedOrigins.indexOf(origin));
     if(allowedOrigins.indexOf(origin) > -1){
         console.log(origin);
          res.setHeader('Access-Control-Allow-Origin', origin);
@@ -118,7 +114,6 @@ app.post('/signup',function(req,res){
 });
 
 app.post('/login',function(req,res){
-    sess=req.session;
     fileModel.findOne({email: req.body.email},function(err,result){
         if(err){
             console.log(err);
@@ -126,7 +121,6 @@ app.post('/login',function(req,res){
         else{
             if(result){
                 if(req.body.password===result.pwd){
-                    sess.email=req.body.email;
                     fileModel.findOneAndUpdate({email: req.body.email},{online: true},function(err1,result1){
                         res.send("valid");
                     });
@@ -161,10 +155,8 @@ app.post('/logout',function(req,res){
 })
 
 app.post('/upload',function(req,res){
-    sess=req.session;
     console.log(req.body.fileName);
     console.log(req.body.fileSize);
-    console.log(sess.email);
     fileModel.findOneAndUpdate({email: req.body.email},{$addToSet:{files: {Email: req.body.email,name: req.body.fileName,size: req.body.fileSize}}},function(err,result){
         if(result)
             console.log("done");  
